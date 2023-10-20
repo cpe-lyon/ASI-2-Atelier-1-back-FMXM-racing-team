@@ -21,7 +21,6 @@ import com.fxmxracingteam.cardservice.service.CardService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/card")
 public class CardRestController {
 	
 	@Autowired
