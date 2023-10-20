@@ -1,7 +1,5 @@
 package com.fxmxracingteam.cardlib.dto;
 
-import com.fxmxracingteam.cardlib.extension.CardBasics;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +9,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardDTO extends CardBasics {
+public class CardDTO {
 
 	private Integer id;
+	private String name;	
+	private String family;
+	private String affinity;
+	private String description;
+	private String imgUrl;
+	private String smallImgUrl;
 	private Float hp;
 	private Float energy;
 	private Float attack;
