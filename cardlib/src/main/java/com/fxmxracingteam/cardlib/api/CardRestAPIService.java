@@ -1,6 +1,7 @@
 package com.fxmxracingteam.cardlib.api;
 
 import com.fxmxracingteam.cardlib.dto.CardDTO;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,13 +11,16 @@ import java.util.List;
 
 public class CardRestAPIService {
 
-    private final WebClient webClient;
+    private WebClient webClient;
 
     @Value("${cardRestAPI.baseUrl:http://localhost:8080}")
     private String baseUrl;
 
-    public CardRestAPIService(WebClient webClient) {
-        this.webClient = webClient;
+    @PostConstruct
+    public void init() {
+        this.webClient = WebClient.builder()
+                .baseUrl(baseUrl)
+                .build();
     }
 
     public List<CardDTO> getAllCards() {
