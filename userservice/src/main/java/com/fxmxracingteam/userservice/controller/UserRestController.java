@@ -66,17 +66,6 @@ public class UserRestController {
 	public void deleteUser(@PathVariable String id) {
 		userService.deleteUser(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST,value="/auth")
-	private Integer getAllCourses(@RequestBody AuthDTO authDto) {
-		 List<UserJPA> uList = userService.getUserByLoginPwd(authDto.getUsername(),authDto.getPassword());
-		if( uList.size() > 0) {
-			
-			return uList.get(0).getId();
-		}
-		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Authentification Failed",null);
-
-	}
 
 
 }
