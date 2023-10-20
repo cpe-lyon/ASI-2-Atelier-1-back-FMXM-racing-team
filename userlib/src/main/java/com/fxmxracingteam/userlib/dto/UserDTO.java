@@ -20,6 +20,10 @@ public class UserDTO {
 	private String pwd;
 	private String email;
 	private Float account;
-	private Set<Integer> cardList;
+	private Set<Integer> cardIdList;
+	
+	public void addCard(Integer cardId) {
+		this.cardIdList.add(cardId);
+	}
 	
 }

@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public class CardRestAPIService {
+public class CardApiRestService {
 
     private WebClient webClient;
 
