@@ -1,7 +1,6 @@
 package com.fxmxracingteam.cardlib.dto;
 
 import com.fxmxracingteam.cardlib.extension.CardBasics;
-import com.fxmxracingteam.cardservice.jpa.CardJPA;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
