@@ -67,6 +67,7 @@ public class UserService {
 	public UserDTO updateUser(UserDTO user, Boolean async) {
 		if (async) {
 			userAsyncService.updateUserDTO(user);
+			return null;
 		}
 		UserJPA u = userMapper.toUserJPA(user);
 		return updateUser(u);
@@ -80,8 +81,9 @@ public class UserService {
 	public void deleteUser(String id, Boolean async) {
 		if (async) {
 			userAsyncService.deleteUser(id);
+		} else {
+			userRepository.deleteById(Integer.valueOf(id));
 		}
-		userRepository.deleteById(Integer.valueOf(id));
 	}
 
 	public Integer getUserByLoginPwd(String login, String pwd) {
