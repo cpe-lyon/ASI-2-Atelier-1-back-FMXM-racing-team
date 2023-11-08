@@ -38,8 +38,8 @@ public class CardRestController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/cards/rand")
-	private List<CardDTO> getRandCards(@RequestParam Integer cardNumber) {
-		return cardService.getRandCardDTO(cardNumber);
+	private List<CardDTO> getRandCards(@RequestParam Integer userId, @RequestParam Integer cardNumber) {
+		return cardService.getRandCardDTO(userId, cardNumber);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/card/{id}")

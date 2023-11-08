@@ -76,7 +76,7 @@ public class CardService {
 		cardRepository.delete(cardModelToDelete);
 	}
 	
-	public List<CardJPA> getRandCard(int nbr){
+	public List<CardJPA> getRandCard(Integer userId, Integer nbr){
 		List<CardJPA> cardList=new ArrayList<>();
 		for(int i=0;i<nbr;i++) {
 			CardReferenceJPA currentCardRef = cardRefService.getRandCardRef();
@@ -86,15 +86,16 @@ public class CardService {
 			currentCard.setEnergy(100f);
 			currentCard.setHp(rand.nextFloat()*100);
 			currentCard.setPrice(currentCard.computePrice());
+			currentCard.setUserId(userId);
 			CardJPA cardSaved = cardRepository.save(currentCard);
 			cardList.add(cardSaved);	
 		}
 		return cardList;
 	}
 
-	public List<CardDTO> getRandCardDTO(int nbr) {
+	public List<CardDTO> getRandCardDTO(Integer userId, Integer nbr) {
 		List<CardDTO> cLightList=new ArrayList<>();
-		for(CardJPA c:getRandCard(nbr)) {
+		for(CardJPA c:getRandCard(userId, nbr)) {
 			CardDTO cLight = cardMapper.toCardDTO(c);
 			cLightList.add(cLight);
 		}

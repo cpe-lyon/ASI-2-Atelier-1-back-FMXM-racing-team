@@ -55,7 +55,7 @@ public class UserService {
 		}
 		UserJPA u = userMapper.toUserJPA(user);
 		userRepository.save(u);
-		List<CardDTO> cardList = cardApiRestService.getRandCard(5);
+		List<CardDTO> cardList = cardApiRestService.getRandCard(user.getId(), 5);
 		for (CardDTO card : cardList) {
 			u.addCard(card.getId());
 		}

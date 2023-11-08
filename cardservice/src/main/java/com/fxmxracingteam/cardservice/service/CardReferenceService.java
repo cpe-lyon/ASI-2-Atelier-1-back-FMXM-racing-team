@@ -36,8 +36,8 @@ public class CardReferenceService {
 	public CardReferenceJPA getRandCardRef() {
 		List<CardReferenceJPA> cardRefList=getAllCardRef();
 		if (!cardRefList.isEmpty()) {
-			Random rand=new Random();
-			int rindex=rand.nextInt(cardRefList.size()-1);
+			Random rand = new Random();
+			int rindex = rand.nextInt(cardRefList.size()-1);
 			return cardRefList.get(rindex);
 		}
 		return null;
