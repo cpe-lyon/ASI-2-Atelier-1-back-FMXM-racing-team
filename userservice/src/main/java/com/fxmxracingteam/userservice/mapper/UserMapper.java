@@ -8,8 +8,8 @@ import com.fxmxracingteam.userservice.jpa.UserJPA;
 @Mapper
 public interface UserMapper {
 	
-	public UserJPA toUserJPA(UserDTO userDTO);
+	UserJPA toUserJPA(UserDTO userDTO);
 	
-	public UserDTO toUserDTO(UserJPA userJPA);
+	UserDTO toUserDTO(UserJPA userJPA);
 
 }
