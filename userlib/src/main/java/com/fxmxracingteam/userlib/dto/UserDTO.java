@@ -1,5 +1,6 @@
 package com.fxmxracingteam.userlib.dto;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDTO implements Serializable {
 	
 	private Integer id;
 	private String surName;

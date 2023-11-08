@@ -4,11 +4,13 @@ import com.fxmxracingteam.cardlib.dto.CardDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+@Service
 public class CardApiRestService {
 
     private WebClient webClient;
@@ -38,6 +40,18 @@ public class CardApiRestService {
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new RuntimeException("Card not found")))
                 .bodyToMono(CardDTO.class)
+                .block();
+    }
+
+    public List<CardDTO> getRandCard(Integer cardNumber) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/cards/rand")
+                        .queryParam("cardNumber", cardNumber)
+                        .build())
+                .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new RuntimeException("Card not found")))
+                .bodyToFlux(CardDTO.class)
+                .collectList()
                 .block();
     }
 

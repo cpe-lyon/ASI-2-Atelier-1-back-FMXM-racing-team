@@ -72,6 +72,15 @@ public class CardService {
 		return cardList;
 	}
 
+	public List<CardDTO> getRandCardDTO(int nbr) {
+		List<CardDTO> cLightList=new ArrayList<>();
+		for(CardJPA c:getAllCardModel()){
+			CardDTO cLight = cardMapper.toCardDTO(c);
+			cLightList.add(cLight);
+		}
+		return cLightList;
+	}
+
 
 	public List<CardJPA> getAllCardToSell(){
 		return this.cardRepository.findByUserId(null);
