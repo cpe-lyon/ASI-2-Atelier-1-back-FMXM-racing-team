@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fxmxracingteam.cardlib.dto.CardDTO;
@@ -80,8 +79,8 @@ public class CardService {
 	public List<CardJPA> getRandCard(int nbr){
 		List<CardJPA> cardList=new ArrayList<>();
 		for(int i=0;i<nbr;i++) {
-			CardReferenceJPA currentCardRef=cardRefService.getRandCardRef();
-			CardJPA currentCard=new CardJPA(currentCardRef);
+			CardReferenceJPA currentCardRef = cardRefService.getRandCardRef();
+			CardJPA currentCard= new CardJPA(currentCardRef);
 			currentCard.setAttack(rand.nextFloat()*100);
 			currentCard.setDefence(rand.nextFloat()*100);
 			currentCard.setEnergy(100f);

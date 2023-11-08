@@ -1,18 +1,27 @@
 package com.fxmxracingteam.cardservice.jpa;
 
-import com.fxmxracingteam.cardlib.extension.CardBasics;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class CardJPA extends CardBasics {
+public class CardJPA {
+	
+	public CardJPA(CardReferenceJPA cardReferenceJPA) {
+		this.name = cardReferenceJPA.getName();
+		this.description = cardReferenceJPA.getDescription();
+		this.family = cardReferenceJPA.getFamily();
+		this.affinity = cardReferenceJPA.getAffinity();
+		this.imgUrl = cardReferenceJPA.getImgUrl();
+		this.smallImgUrl = cardReferenceJPA.getSmallImgUrl();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,19 +33,13 @@ public class CardJPA extends CardBasics {
 	private Float price;
 	private Integer userId;
 	private Integer storeId;
-
-	public CardJPA( CardJPA cModel) {
-		super(cModel);
-		this.energy=cModel.getEnergy();
-		this.hp=cModel.getHp();
-		this.defence=cModel.getDefence();
-		this.attack=cModel.getAttack();
-		this.price=cModel.getPrice();
-	}
-
-	public CardJPA( CardBasics cardBasic) {
-		super(cardBasic);
-	}
+	
+	private String name;
+	private String description;
+	private String family;
+	private String affinity;
+	private String imgUrl;
+	private String smallImgUrl;
 	
 	public float computePrice() {
 		return this.hp * 20 + this.defence*20 + this.energy*20 + this.attack*20;
