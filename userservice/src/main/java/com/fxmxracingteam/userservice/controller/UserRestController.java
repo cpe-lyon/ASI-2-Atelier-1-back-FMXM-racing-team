@@ -20,7 +20,7 @@ public class UserRestController {
 	private final UserService userService;
 
 	@Value("${userservice.isAsync:true}")
-	private Boolean isAsync;
+	private static Boolean isAsync;
 
 	public UserRestController(UserService userService) {
 		this.userService = userService;
