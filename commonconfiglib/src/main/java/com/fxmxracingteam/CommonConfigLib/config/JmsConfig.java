@@ -1,3 +1,5 @@
+package com.fxmxracingteam.CommonConfigLib.config;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
