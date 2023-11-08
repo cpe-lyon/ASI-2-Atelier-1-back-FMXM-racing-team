@@ -86,9 +86,8 @@ public class CardService {
 			currentCard.setEnergy(100f);
 			currentCard.setHp(rand.nextFloat()*100);
 			currentCard.setPrice(currentCard.computePrice());
-			//save new card before sending for user creation
-			//this.addCard(currentCard);
-			cardList.add(currentCard);
+			CardJPA cardSaved = cardRepository.save(currentCard);
+			cardList.add(cardSaved);	
 		}
 		return cardList;
 	}
