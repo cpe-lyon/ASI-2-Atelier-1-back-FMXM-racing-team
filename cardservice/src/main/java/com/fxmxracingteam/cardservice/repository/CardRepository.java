@@ -11,5 +11,6 @@ import com.fxmxracingteam.cardservice.jpa.CardJPA;
 public interface CardRepository extends JpaRepository<CardJPA, Integer> {
 
 	List<CardJPA> findByUserId(Integer userId);
+	CardJPA getCardJPAById(Integer id);
 	
 }

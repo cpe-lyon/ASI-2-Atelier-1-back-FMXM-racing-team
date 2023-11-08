@@ -17,20 +17,23 @@ import com.fxmxracingteam.cardservice.repository.CardRepository;
 @Service
 public class CardService {
 	
-	@Autowired
-	private CardRepository cardRepository;
+	private final CardRepository cardRepository;
 	
-	@Autowired
-	private CardReferenceService cardRefService;
+	private final CardReferenceService cardRefService;
 	
-	@Autowired
-	private CardAsyncService cardAsyncService;
+	private final CardAsyncService cardAsyncService;
 	
-	@Autowired
-	private CardMapper cardMapper;
+	private final CardMapper cardMapper;
 	
 	private Random rand;
-	
+
+	public CardService(CardRepository cardRepository, CardReferenceService cardRefService, CardAsyncService cardAsyncService, CardMapper cardMapper) {
+		this.cardRepository = cardRepository;
+		this.cardRefService = cardRefService;
+		this.cardAsyncService = cardAsyncService;
+		this.cardMapper = cardMapper;
+	}
+
 	public List<CardJPA> getAllCardModel() {
 		List<CardJPA> cardList = new ArrayList<>();
 		cardRepository.findAll().forEach(cardList::add);
@@ -93,7 +96,7 @@ public class CardService {
 
 	public List<CardDTO> getRandCardDTO(int nbr) {
 		List<CardDTO> cLightList=new ArrayList<>();
-		for(CardJPA c:getAllCardModel()){
+		for(CardJPA c:getRandCard(nbr)) {
 			CardDTO cLight = cardMapper.toCardDTO(c);
 			cLightList.add(cLight);
 		}
