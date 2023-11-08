@@ -41,7 +41,9 @@ public class StoreService {
 		if (user == null || card == null) {
 			return false; 
 		}
-		if (user.getAccount() > card.getPrice()) { 
+		if (user.getAccount() > card.getPrice()) {
+			card.setUserId(user_id);
+			cardApiRestService.updateCard(card, card_id.toString());
 			user.addCard(card_id);
 			user.setAccount(user.getAccount() - card.getPrice());
 			userApiRestService.updateUser(user, user_id.toString());
@@ -61,6 +63,7 @@ public class StoreService {
 		}
 		card.setUserId(null);
 		cardApiRestService.updateCard(card, card_id.toString());
+		user.getCardIdList().remove(card_id);
 		user.setAccount(user.getAccount() + card.getPrice());
 		userApiRestService.updateUser(user, user_id.toString());
 		StoreTransactionJPA sT = new StoreTransactionJPA(user_id, card_id, StoreAction.SELL);
