@@ -23,6 +23,8 @@ import com.fxmxracingteam.cardservice.service.CardService;
 @RestController
 public class CardRestController {
 	
+	private static final Boolean ASYNC = true;
+	
 	@Autowired
 	private CardService cardService;
 	
@@ -42,10 +44,10 @@ public class CardRestController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/card/{id}")
 	private CardDTO getCard(@PathVariable String id) {
-		Optional<CardJPA> rcard;
-		rcard= cardService.getCard(Integer.valueOf(id));
-		if(rcard.isPresent()) {
-			return cardMapper.toCardDTO(rcard.get());
+		Optional<CardJPA> card;
+		card= cardService.getCard(Integer.valueOf(id));
+		if(card.isPresent()) {
+			return cardMapper.toCardDTO(card.get());
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card id:"+id+", not found",null);
 
@@ -53,18 +55,18 @@ public class CardRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/card")
 	public CardDTO addCard(@RequestBody CardDTO card) {
-		return cardService.addCard(cardMapper.toCardJPA(card));
+		return cardService.addCard(cardMapper.toCardJPA(card), ASYNC);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/card/{id}")
-	public CardDTO updateCard(@RequestBody CardDTO card,@PathVariable String id) {
+	public CardDTO updateCard(@RequestBody CardDTO card, @PathVariable String id) {
 		card.setId(Integer.valueOf(id));
-		 return cardService.updateCard(cardMapper.toCardJPA(card));
+		return cardService.updateCard(cardMapper.toCardJPA(card), ASYNC);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/card/{id}")
 	public void deleteUser(@PathVariable String id) {
-		cardService.deleteCardModel(Integer.valueOf(id));
+		cardService.deleteCard(Integer.valueOf(id), null, ASYNC);
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/cards_to_sell")
@@ -77,6 +79,5 @@ public class CardRestController {
 		return list;
 
 	}
-
 
 }

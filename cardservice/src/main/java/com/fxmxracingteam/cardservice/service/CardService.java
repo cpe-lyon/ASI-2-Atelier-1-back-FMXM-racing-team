@@ -24,6 +24,9 @@ public class CardService {
 	private CardReferenceService cardRefService;
 	
 	@Autowired
+	private CardAsyncService cardAsyncService;
+	
+	@Autowired
 	private CardMapper cardMapper;
 	
 	private Random rand;
@@ -34,7 +37,12 @@ public class CardService {
 		return cardList;
 	}
 
-	public CardDTO addCard(CardJPA cardModel) {
+	public CardDTO addCard(CardJPA cardModel, Boolean async) {
+		if (async) {
+			CardDTO cardDTO = cardMapper.toCardDTO(cardModel);
+			cardAsyncService.sendAddCard(cardDTO);
+			return cardDTO;
+		}
 		CardJPA cDb=cardRepository.save(cardModel);
 		return cardMapper.toCardDTO(cDb);
 	}
@@ -43,16 +51,27 @@ public class CardService {
 		cardRepository.save(cardModel);
 
 	}
-	public CardDTO updateCard(CardJPA cardModel) {
+	
+	public CardDTO updateCard(CardJPA cardModel, Boolean async) {
+		if (async) {
+			CardDTO cardDTO = cardMapper.toCardDTO(cardModel);
+			cardAsyncService.sendUpdateCard(cardDTO);
+		}
 		CardJPA cDb=cardRepository.save(cardModel);
 		return cardMapper.toCardDTO(cDb);
 	}
+	
 	public Optional<CardJPA> getCard(Integer id) {
 		return cardRepository.findById(id);
 	}
 	
-	public void deleteCardModel(Integer id) {
-		cardRepository.deleteById(id);
+	public void deleteCard(Integer id, CardJPA cardModel, Boolean async) {
+		CardJPA cardModelToDelete = cardRepository.findById(id).orElse(null);
+		if (async) {
+			CardDTO cardDTO = cardMapper.toCardDTO(cardModelToDelete);
+			cardAsyncService.sendDeleteCard(cardDTO);
+		}
+		cardRepository.delete(cardModelToDelete);
 	}
 	
 	public List<CardJPA> getRandCard(int nbr){

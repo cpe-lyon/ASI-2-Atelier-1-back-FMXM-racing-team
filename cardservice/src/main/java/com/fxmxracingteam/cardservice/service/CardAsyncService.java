@@ -1,22 +1,43 @@
 package com.fxmxracingteam.cardservice.service;
 
-import jakarta.jms.TextMessage;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import com.fxmxracingteam.cardlib.dto.CardDTO;
+
+import jakarta.jms.ObjectMessage;
+
 @Service
 public class CardAsyncService {
+	
     private final JmsTemplate jmsTemplate;
-    private final String QUEUE_NAME = "myQueue"; // Remplacez par le nom de votre file d'attente
+    private static final String QUEUE_NAME = "cardServiceQueue";
 
     public CardAsyncService(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
 
-    public void sendMessage(String message) {
+    public void sendAddCard(CardDTO cardDTO) {
         jmsTemplate.send(QUEUE_NAME, session -> {
-            TextMessage textMessage = session.createTextMessage();
-            return textMessage;
+            ObjectMessage oM = session.createObjectMessage(cardDTO);
+            oM.setStringProperty("action", "add");
+            return oM;
+        });
+    }
+    
+    public void sendDeleteCard(CardDTO cardDTO) {
+        jmsTemplate.send(QUEUE_NAME, session -> {
+            ObjectMessage oM = session.createObjectMessage(cardDTO);
+            oM.setStringProperty("action", "delete");
+            return oM;
+        });
+    }
+    
+    public void sendUpdateCard(CardDTO cardDTO) {
+        jmsTemplate.send(QUEUE_NAME, session -> {
+            ObjectMessage oM = session.createObjectMessage(cardDTO);
+            oM.setStringProperty("action", "update");
+            return oM;
         });
     }
 }
