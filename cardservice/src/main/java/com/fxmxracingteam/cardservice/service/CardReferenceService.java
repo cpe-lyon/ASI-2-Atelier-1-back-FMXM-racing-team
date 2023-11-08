@@ -49,7 +49,7 @@ public class CardReferenceService {
 	@EventListener(ApplicationReadyEvent.class)
 	public void doInitAfterStartup() {
 		for(int i=0;i<10;i++){
-			CardReferenceJPA cardRef =new CardReferenceJPA("name"+i,"description"+i,"family"+i,"affinity"+i,"http://medias.3dvf.com/news/sitegrab/gits2045.jpg","https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg");
+			CardReferenceJPA cardRef =new CardReferenceJPA(null, "name"+i,"description"+i,"family"+i,"affinity"+i,"http://medias.3dvf.com/news/sitegrab/gits2045.jpg","https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg");
 			addCardRef(cardRef);
 			i++;
 		}
