@@ -49,7 +49,8 @@ public class CardApiRestService {
     public List<CardDTO> getRandCard(Integer userId, Integer cardNumber) {
         return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder.path("/cards/rand")
-                        .queryParam("userId", userId, "cardNumber", cardNumber)
+                        .queryParam("cardNumber", cardNumber)
+                        .queryParam("userId", userId)
                         .build())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new RuntimeException("Card not found")))

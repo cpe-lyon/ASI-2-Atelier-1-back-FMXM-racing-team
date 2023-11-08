@@ -52,10 +52,11 @@ public class UserService {
 	public UserDTO addUser(UserDTO user, Boolean async) {
 		if (async) {
 			userAsyncService.createUserDTO(user);
+			return null;
 		}
 		UserJPA u = userMapper.toUserJPA(user);
-		userRepository.save(u);
-		List<CardDTO> cardList = cardApiRestService.getRandCard(user.getId(), 5);
+		u = userRepository.save(u);
+		List<CardDTO> cardList = cardApiRestService.getRandCard(u.getId(), 5);
 		for (CardDTO card : cardList) {
 			u.addCard(card.getId());
 		}

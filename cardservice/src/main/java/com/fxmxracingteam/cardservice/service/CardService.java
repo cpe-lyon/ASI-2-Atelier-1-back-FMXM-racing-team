@@ -81,6 +81,7 @@ public class CardService {
 		for(int i=0;i<nbr;i++) {
 			CardReferenceJPA currentCardRef = cardRefService.getRandCardRef();
 			CardJPA currentCard= new CardJPA(currentCardRef);
+			currentCard.setId(null);
 			currentCard.setAttack(rand.nextFloat()*100);
 			currentCard.setDefence(rand.nextFloat()*100);
 			currentCard.setEnergy(100f);
