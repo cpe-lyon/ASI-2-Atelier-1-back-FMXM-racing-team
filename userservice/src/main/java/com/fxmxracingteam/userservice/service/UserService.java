@@ -82,10 +82,11 @@ public class UserService {
 		userRepository.deleteById(Integer.valueOf(id));
 	}
 
-	public List<UserJPA> getUserByLoginPwd(String login, String pwd) {
+	public Integer getUserByLoginPwd(String login, String pwd) {
 		List<UserJPA> ulist = null;
 		ulist = userRepository.findByLoginAndPwd(login, pwd);
-		return ulist;
+		Integer uId = ulist.get(0).getId();
+		return uId;
 	}
 
 	private UserJPA fromUDtoToUModel(UserDTO user) {

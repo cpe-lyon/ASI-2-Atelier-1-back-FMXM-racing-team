@@ -1,24 +1,17 @@
 package com.fxmxracingteam.userservice.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.fxmxracingteam.userlib.dto.AuthDTO;
 import com.fxmxracingteam.userlib.dto.UserDTO;
-import com.fxmxracingteam.userservice.jpa.UserJPA;
-import com.fxmxracingteam.userservice.mapper.UserMapper;
 import com.fxmxracingteam.userservice.service.UserService;
 
 @CrossOrigin
@@ -60,5 +53,9 @@ public class UserRestController {
 		userService.deleteUser(id, isAsync);
 	}
 
+	@RequestMapping(method=RequestMethod.GET,value="/user/login")
+	public Integer findUserByLoginAndPwd(@RequestBody AuthDTO authDTO) {
+		return userService.getUserByLoginPwd(authDTO.getUsername(), authDTO.getPassword());
+	}
 
 }

@@ -70,7 +70,7 @@ public class UserApiRestService {
 
     public Integer authenticateUser(AuthDTO authDto) {
         return webClient.post()
-                .uri("/auth")
+                .uri("/user/login")
                 .bodyValue(authDto)
                 .retrieve()
                 .onStatus(status -> status.is4xxClientError(), response -> Mono.error(new RuntimeException("Authentication Failed")))
