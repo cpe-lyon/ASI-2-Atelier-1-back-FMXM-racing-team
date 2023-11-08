@@ -1,7 +1,7 @@
 package com.fxmxracingteam.storelib.dto;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import com.fxmxracingteam.storelib.enums.StoreAction;
 
