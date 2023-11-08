@@ -16,17 +16,19 @@ public class CardApiRestService {
     private WebClient webClient;
 
     @Value("${cardRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl;
+    private String baseUrl = "http://localhost:8084";
 
-    @PostConstruct
-    public void init() {
-        this.webClient = WebClient.builder()
-                .baseUrl(baseUrl)
-                .build();
+    public WebClient getWebClient() {
+        if (webClient == null) {
+            this.webClient = WebClient.builder()
+                    .baseUrl(baseUrl)
+                    .build();
+        }
+        return this.webClient;
     }
 
     public List<CardDTO> getAllCards() {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/cards")
                 .retrieve()
                 .bodyToFlux(CardDTO.class)
@@ -35,7 +37,7 @@ public class CardApiRestService {
     }
 
     public CardDTO getCard(String id) {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/card/{id}", id)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new RuntimeException("Card not found")))
@@ -44,7 +46,7 @@ public class CardApiRestService {
     }
 
     public List<CardDTO> getRandCard(Integer cardNumber) {
-        return webClient.get()
+        return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder.path("/cards/rand")
                         .queryParam("cardNumber", cardNumber)
                         .build())
@@ -56,7 +58,7 @@ public class CardApiRestService {
     }
 
     public CardDTO addCard(CardDTO card) {
-        return webClient.post()
+        return getWebClient().post()
                 .uri("/card")
                 .bodyValue(card)
                 .retrieve()
@@ -65,7 +67,7 @@ public class CardApiRestService {
     }
 
     public CardDTO updateCard(CardDTO card, String id) {
-        return webClient.put()
+        return getWebClient().put()
                 .uri("/card/{id}", id)
                 .bodyValue(card)
                 .retrieve()
@@ -74,7 +76,7 @@ public class CardApiRestService {
     }
 
     public void deleteCard(String id) {
-        webClient.delete()
+        getWebClient().delete()
                 .uri("/card/{id}", id)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -82,7 +84,7 @@ public class CardApiRestService {
     }
 
     public List<CardDTO> getCardsToSell() {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/cards_to_sell")
                 .retrieve()
                 .bodyToFlux(CardDTO.class)

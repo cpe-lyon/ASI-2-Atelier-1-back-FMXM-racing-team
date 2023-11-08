@@ -23,6 +23,7 @@ public class UserService {
 	private CardApiRestService cardApiRestService;
 
 	public UserService(UserRepository userRepository, UserMapper userMapper, UserAsyncService userAsyncService) {
+		this.cardApiRestService = new CardApiRestService();
 		this.userRepository = userRepository;
 		this.userMapper = userMapper;
 		this.userAsyncService = userAsyncService;

@@ -24,7 +24,7 @@ public class CardService {
 	
 	private final CardMapper cardMapper;
 	
-	private Random rand;
+	private Random rand = new Random();
 
 	public CardService(CardRepository cardRepository, CardReferenceService cardRefService, CardAsyncService cardAsyncService, CardMapper cardMapper) {
 		this.cardRepository = cardRepository;

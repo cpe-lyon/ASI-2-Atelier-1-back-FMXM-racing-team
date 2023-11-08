@@ -14,6 +14,7 @@ public class JmsConfig {
         connectionFactory.setBrokerURL("tcp://localhost:61616"); // Remplacez hostname et port par vos valeurs
         connectionFactory.setUserName("admin"); // Optionnel
         connectionFactory.setPassword("admin"); // Optionnel
+        connectionFactory.setTrustAllPackages(true);
         return connectionFactory;
     }
 
