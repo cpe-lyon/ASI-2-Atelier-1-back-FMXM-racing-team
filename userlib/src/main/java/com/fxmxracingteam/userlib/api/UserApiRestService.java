@@ -14,18 +14,20 @@ public class UserApiRestService {
     private WebClient webClient;
 
     @Value("${userRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl;
+    private String baseUrl = "http://localhost:8080";
 
-    @PostConstruct
-    public void init() {
-        this.webClient = WebClient.builder()
-                .baseUrl(baseUrl)
-                .build();
+    public WebClient getWebClient() {
+        if (webClient == null) {
+            this.webClient = WebClient.builder()
+                    .baseUrl(baseUrl)
+                    .build();
+        }
+        return this.webClient;
     }
 
 
     public List<UserDTO> getAllUsers() {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/users")
                 .retrieve()
                 .bodyToFlux(UserDTO.class)
@@ -34,7 +36,7 @@ public class UserApiRestService {
     }
 
     public UserDTO getUser(String id) {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/user/{id}", id)
                 .retrieve()
                 .onStatus(status -> status.is4xxClientError(), response -> Mono.error(new RuntimeException("User not found")))
@@ -43,7 +45,7 @@ public class UserApiRestService {
     }
 
     public UserDTO addUser(UserDTO user) {
-        return webClient.post()
+        return getWebClient().post()
                 .uri("/user")
                 .bodyValue(user)
                 .retrieve()
@@ -52,7 +54,7 @@ public class UserApiRestService {
     }
 
     public UserDTO updateUser(UserDTO user, String id) {
-        return webClient.put()
+        return getWebClient().put()
                 .uri("/user/{id}", id)
                 .bodyValue(user)
                 .retrieve()
@@ -61,7 +63,7 @@ public class UserApiRestService {
     }
 
     public void deleteUser(String id) {
-        webClient.delete()
+        getWebClient().delete()
                 .uri("/user/{id}", id)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -69,7 +71,7 @@ public class UserApiRestService {
     }
 
     public Integer authenticateUser(AuthDTO authDto) {
-        return webClient.post()
+        return getWebClient().post()
                 .uri("/user/login")
                 .bodyValue(authDto)
                 .retrieve()

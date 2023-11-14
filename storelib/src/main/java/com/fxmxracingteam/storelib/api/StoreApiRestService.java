@@ -12,17 +12,19 @@ public class StoreApiRestService {
     private WebClient webClient;
 
     @Value("${storeRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl;
+    private String baseUrl = "http://localhost:8081";
 
-    @PostConstruct
-    public void init() {
-        this.webClient = WebClient.builder()
-                .baseUrl(baseUrl)
-                .build();
+    public WebClient getWebClient() {
+        if (webClient == null) {
+            this.webClient = WebClient.builder()
+                    .baseUrl(baseUrl)
+                    .build();
+        }
+        return this.webClient;
     }
 
     public boolean buyCard(StoreOrderDTO order) {
-        return Boolean.TRUE.equals(webClient.post()
+        return Boolean.TRUE.equals(getWebClient().post()
                 .uri("/buy")
                 .bodyValue(order)
                 .retrieve()
@@ -31,7 +33,7 @@ public class StoreApiRestService {
     }
 
     public boolean sellCard(StoreOrderDTO order) {
-        return Boolean.TRUE.equals(webClient.post()
+        return Boolean.TRUE.equals(getWebClient().post()
                 .uri("/sell")
                 .bodyValue(order)
                 .retrieve()
@@ -40,7 +42,7 @@ public class StoreApiRestService {
     }
 
     public List<StoreTransactionDTO> getAllTransactions() {
-        return webClient.get()
+        return getWebClient().get()
                 .uri("/transaction")
                 .retrieve()
                 .bodyToFlux(StoreTransactionDTO.class)
