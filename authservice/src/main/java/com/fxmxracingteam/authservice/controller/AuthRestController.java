@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fxmxracingteam.authservice.service.AuthService;
 import com.fxmxracingteam.userlib.dto.AuthDTO;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthRestController {
@@ -19,7 +18,7 @@ public class AuthRestController {
 	AuthService authService;
 	
 	
-	@RequestMapping(method=RequestMethod.POST,value="/auth")
+	@RequestMapping(method=RequestMethod.POST)
 	private Integer login(@RequestBody AuthDTO authDto) {
 		
 		return authService.login(authDto);
