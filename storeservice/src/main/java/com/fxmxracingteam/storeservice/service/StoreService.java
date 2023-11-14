@@ -41,7 +41,7 @@ public class StoreService {
 		if (user == null || card == null) {
 			return false; 
 		}
-		if (user.getAccount() > card.getPrice()) {
+		if (user.getAccount() >= card.getPrice()) {
 			card.setUserId(user_id);
 			cardApiRestService.updateCard(card, card_id.toString());
 			user.addCard(card_id);

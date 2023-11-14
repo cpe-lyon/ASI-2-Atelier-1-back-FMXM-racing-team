@@ -21,18 +21,18 @@ public class StoreRestController {
 	private StoreService storeService;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/store/buy")
-	private boolean getAllCards(@RequestBody StoreOrderDTO order) {
+	private boolean buyCard(@RequestBody StoreOrderDTO order) {
 		return storeService.buyCard(order.getUser_id(), order.getCard_id());
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/store/sell")
-	private boolean getCard(@RequestBody StoreOrderDTO order) {
+	private boolean sellCard(@RequestBody StoreOrderDTO order) {
 		return storeService.sellCard(order.getUser_id(), order.getCard_id());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/store/transaction")
-	private List<StoreTransactionJPA> getCard() {
+	private List<StoreTransactionJPA> getTransactions() {
 		return storeService.getAllTransactions();
 	}
 
