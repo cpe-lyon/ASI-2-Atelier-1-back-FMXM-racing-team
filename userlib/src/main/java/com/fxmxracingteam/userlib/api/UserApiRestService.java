@@ -4,7 +4,9 @@ import com.fxmxracingteam.userlib.dto.AuthDTO;
 import com.fxmxracingteam.userlib.dto.UserDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -75,7 +77,7 @@ public class UserApiRestService {
                 .uri("/user/login")
                 .bodyValue(authDto)
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError(), response -> Mono.error(new RuntimeException("Authentication Failed")))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> response.bodyToMono(String.class).flatMap(error -> Mono.error(new ResponseStatusException(response.statusCode(), error))))
                 .bodyToMono(Integer.class)
                 .block();
     }

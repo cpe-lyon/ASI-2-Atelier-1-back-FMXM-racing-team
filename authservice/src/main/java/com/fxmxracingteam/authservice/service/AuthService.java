@@ -1,9 +1,11 @@
 package com.fxmxracingteam.authservice.service;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import com.fxmxracingteam.userlib.api.UserApiRestService;
 import com.fxmxracingteam.userlib.dto.AuthDTO;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
@@ -15,7 +17,11 @@ public class AuthService {
 	}
 
 	public Integer login(AuthDTO authDto) {
-		return userApiRestService.authenticateUser(authDto);
+		try {
+			return userApiRestService.authenticateUser(authDto);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 	
 }

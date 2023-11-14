@@ -53,7 +53,7 @@ public class UserRestController {
 		userService.deleteUser(id, isAsync);
 	}
 
-	@RequestMapping(method=RequestMethod.GET,value="/user/login")
+	@RequestMapping(method=RequestMethod.POST,value="/user/login")
 	public Integer findUserByLoginAndPwd(@RequestBody AuthDTO authDTO) {
 		return userService.getUserByLoginPwd(authDTO.getUsername(), authDTO.getPassword());
 	}

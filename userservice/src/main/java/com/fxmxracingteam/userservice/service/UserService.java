@@ -89,8 +89,10 @@ public class UserService {
 	public Integer getUserByLoginPwd(String login, String pwd) {
 		List<UserJPA> ulist = null;
 		ulist = userRepository.findByLoginAndPwd(login, pwd);
-		Integer uId = ulist.get(0).getId();
-		return uId;
+		if(ulist.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User login:"+login+", not found",null);
+		}
+		return ulist.get(0).getId();
 	}
 
 	private UserJPA fromUDtoToUModel(UserDTO user) {
