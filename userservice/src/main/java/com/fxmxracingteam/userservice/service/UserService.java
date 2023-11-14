@@ -50,6 +50,7 @@ public class UserService {
 	}
 
 	public UserDTO addUser(UserDTO user, Boolean async) {
+		user.setAccount(0f);
 		if (async) {
 			userAsyncService.createUserDTO(user);
 			return null;
@@ -94,19 +95,6 @@ public class UserService {
 		}
 		return ulist.get(0).getId();
 	}
-
-	private UserJPA fromUDtoToUModel(UserDTO user) {
-		UserJPA u = userMapper.toUserJPA(user);
-		//List<CardModel> cardList = new ArrayList<CardModel>();
-		//for (Integer cardId : user.getCardList()) {
-		//	Optional<CardModel> card = cardService.getCard(cardId);
-		//	if (card.isPresent()) {
-		//		cardList.add(card.get());
-		//	}
-		//}
-		return u;
-	}
-
 
 	public UserDTO getUserDTO(String id) {
 		Optional<UserJPA> ruser;

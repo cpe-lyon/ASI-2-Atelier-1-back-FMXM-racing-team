@@ -36,6 +36,11 @@ public class CardRestController {
 		return cLightList;
 
 	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/cards/user_id/{id}")
+	private List<CardDTO> getUserCards(@PathVariable String id) {
+		return cardService.getUserCards(Integer.valueOf(id));
+	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/cards/rand")
 	private List<CardDTO> getRandCards(@RequestParam Integer userId, @RequestParam Integer cardNumber) {

@@ -105,7 +105,12 @@ public class CardService {
 
 
 	public List<CardJPA> getAllCardToSell(){
+		//No userId on a card means it is to sell
 		return this.cardRepository.findByUserId(null);
+	}
+	
+	public List<CardDTO> getUserCards(Integer userId) {
+		return this.cardMapper.toCardDTO(this.cardRepository.findByUserId(userId));
 	}
 
 
