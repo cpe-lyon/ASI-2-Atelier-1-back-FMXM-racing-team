@@ -1,0 +1,32 @@
+version: '3'
+services:
+  maven:
+    image: maven:3.8.4-jdk-11
+    volumes:
+      - ../ASI-2-Atelier-1-back-FMXM-racing-team:/usr/src/mymaven
+    working_dir: /usr/src/mymaven
+    command: mvn clean install -DskipTests
+
+  authservice:
+    build:
+      context: ./authservice
+    depends_on:
+      - maven
+
+  cardservice:
+    build:
+      context: ./cardservice
+    depends_on:
+      - maven
+      
+  storeservice:
+    build:
+      context: ./storeservice
+    depends_on:
+      - maven
+
+  userservice:
+    build:
+      context: ./userservice
+    depends_on:
+      - maven

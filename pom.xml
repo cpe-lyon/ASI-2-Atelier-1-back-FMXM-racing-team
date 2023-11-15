@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>parent-project</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging> <!-- This is important to specify that it's an aggregator project -->
+
+    <modules>
+        <module>authservice</module>
+        <module>cardlib</module>
+        <module>cardservice</module>
+		<module>commonconfiglib</module>
+        <module>storelib</module>
+		<module>storeservice</module>
+        <module>userlib</module>
+        <module>userservice</module>
+        <!-- Add all your child projects here -->
+    </modules>
+
+    <!-- You can also define common configurations or dependencies here -->
+
+</project>
