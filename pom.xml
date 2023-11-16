@@ -12,7 +12,6 @@
         <module>authservice</module>
         <module>cardlib</module>
         <module>cardservice</module>
-		<module>commonconfiglib</module>
         <module>storelib</module>
 		<module>storeservice</module>
         <module>userlib</module>
