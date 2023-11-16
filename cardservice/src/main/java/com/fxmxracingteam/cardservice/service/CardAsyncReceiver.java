@@ -1,5 +1,6 @@
 package com.fxmxracingteam.cardservice.service;
 
+import com.fxmxracingteam.cardlib.dto.CardTransactionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -28,12 +29,12 @@ public class CardAsyncReceiver {
 	@JmsListener(destination = "cardServiceQueue", selector = "action = 'delete'")
     public void receiveDeleteCard(CardDTO cardDTO) {
 		CardJPA cardModel = cardMapper.toCardJPA(cardDTO);
-        cardService.deleteCard(null, cardModel, ASYNC);
+        cardService.deleteCardAsync(cardModel);
     }
 	
 	@JmsListener(destination = "cardServiceQueue", selector = "action = 'update'")
-    public void receiveUpdateCard(CardDTO cardDTO) {
-		CardJPA cardModel = cardMapper.toCardJPA(cardDTO);
-        cardService.updateCard(cardModel, ASYNC);
+    public void receiveUpdateCard(CardTransactionDTO cardTransactionDTO) {
+		CardJPA cardModel = cardMapper.toCardJPA(cardTransactionDTO.getCardDTO());
+        cardService.updateCard(cardModel, ASYNC, cardTransactionDTO.getTransactionId());
     }
 }

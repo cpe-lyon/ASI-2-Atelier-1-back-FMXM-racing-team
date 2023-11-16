@@ -1,5 +1,6 @@
 package com.fxmxracingteam.cardservice.service;
 
+import com.fxmxracingteam.cardlib.dto.CardTransactionDTO;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,9 @@ public class CardAsyncService {
         });
     }
     
-    public void sendUpdateCard(CardDTO cardDTO) {
+    public void sendUpdateCard(CardDTO cardDTO, Integer transactionId) {
         jmsTemplate.send(QUEUE_NAME, session -> {
-            ObjectMessage oM = session.createObjectMessage(cardDTO);
+            ObjectMessage oM = session.createObjectMessage(new CardTransactionDTO(transactionId, cardDTO));
             oM.setStringProperty("action", "update");
             return oM;
         });

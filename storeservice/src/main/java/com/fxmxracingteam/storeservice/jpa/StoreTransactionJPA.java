@@ -2,6 +2,7 @@ package com.fxmxracingteam.storeservice.jpa;
 
 import java.sql.Timestamp;
 
+import com.fxmxracingteam.storelib.dto.TransactionState;
 import com.fxmxracingteam.storelib.enums.StoreAction;
 
 import jakarta.persistence.Entity;
@@ -25,6 +26,9 @@ public class StoreTransactionJPA {
 	private Integer cardId;
 	private StoreAction action;
     private Timestamp timeSt;
+	private boolean userOperation;
+	private boolean cardOperation;
+	private TransactionState state;
     
     public StoreTransactionJPA() {
 		this.timeSt=new Timestamp(System.currentTimeMillis());

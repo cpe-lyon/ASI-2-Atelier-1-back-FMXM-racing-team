@@ -3,12 +3,7 @@ package com.fxmxracingteam.userservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fxmxracingteam.userlib.dto.AuthDTO;
 import com.fxmxracingteam.userlib.dto.UserDTO;
@@ -42,9 +37,9 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
-	public UserDTO updateUser(@RequestBody UserDTO user,@PathVariable String id) {
+	public UserDTO updateUser(@RequestBody UserDTO user, @PathVariable String id, @RequestParam(required=false) Integer transactionId) {
 		user.setId(Integer.valueOf(id));
-		return userService.updateUser(user, isAsync);
+		return userService.updateUser(user, isAsync, transactionId);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")

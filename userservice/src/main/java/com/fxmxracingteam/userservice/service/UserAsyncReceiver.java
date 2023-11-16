@@ -1,6 +1,7 @@
 package com.fxmxracingteam.userservice.service;
 
 import com.fxmxracingteam.userlib.dto.UserDTO;
+import com.fxmxracingteam.userlib.dto.UserTransactionDTO;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,8 @@ public class UserAsyncReceiver {
     }
 
     @JmsListener(destination = QUEUE_NAME, selector = "action = 'UPDATE'")
-    public void receiveUpdateUserDTO(UserDTO userDTO) {
-        userService.updateUser(userDTO, false);
+    public void receiveUpdateUserDTO(UserTransactionDTO userTransactionDTO) {
+        userService.updateUser(userTransactionDTO.getUserDTO(), false, userTransactionDTO.getTransactionId());
     }
 
     @JmsListener(destination = QUEUE_NAME, selector = "action = 'DELETE'")

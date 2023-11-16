@@ -22,5 +22,7 @@ public class StoreTransactionDTO implements Serializable {
 	private Integer cardId;
 	private StoreAction action;
 	private Timestamp timeSt;
-	
+	private boolean userState;
+	private boolean cardState;
+	private TransactionState state;
 }

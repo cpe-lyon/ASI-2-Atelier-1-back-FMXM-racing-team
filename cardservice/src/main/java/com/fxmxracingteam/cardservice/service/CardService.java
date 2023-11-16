@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.fxmxracingteam.storelib.api.StoreApiRestService;
+import com.fxmxracingteam.storelib.dto.OperationType;
 import org.springframework.stereotype.Service;
 
 import com.fxmxracingteam.cardlib.dto.CardDTO;
@@ -21,7 +23,8 @@ public class CardService {
 	private final CardReferenceService cardRefService;
 	
 	private final CardAsyncService cardAsyncService;
-	
+	private final StoreApiRestService storeApiRestService;
+
 	private final CardMapper cardMapper;
 	
 	private Random rand = new Random();
@@ -31,6 +34,7 @@ public class CardService {
 		this.cardRefService = cardRefService;
 		this.cardAsyncService = cardAsyncService;
 		this.cardMapper = cardMapper;
+		this.storeApiRestService = new StoreApiRestService();
 	}
 
 	public List<CardJPA> getAllCardModel() {
@@ -54,12 +58,15 @@ public class CardService {
 
 	}
 	
-	public CardDTO updateCard(CardJPA cardModel, Boolean async) {
+	public CardDTO updateCard(CardJPA cardModel, Boolean async, Integer transactionId) {
 		if (async) {
 			CardDTO cardDTO = cardMapper.toCardDTO(cardModel);
-			cardAsyncService.sendUpdateCard(cardDTO);
+			cardAsyncService.sendUpdateCard(cardDTO, transactionId);
 		}
 		CardJPA cDb=cardRepository.save(cardModel);
+		if(transactionId!=null) {
+			storeApiRestService.updateTransactionOperation(transactionId, OperationType.CARD.toString(), true);
+		}
 		return cardMapper.toCardDTO(cDb);
 	}
 	
@@ -67,13 +74,16 @@ public class CardService {
 		return cardRepository.findById(id);
 	}
 	
-	public void deleteCard(Integer id, CardJPA cardModel, Boolean async) {
+	public void deleteCardAsync(Integer id) {
 		CardJPA cardModelToDelete = cardRepository.findById(id).orElse(null);
-		if (async) {
+		if (cardModelToDelete != null) {
 			CardDTO cardDTO = cardMapper.toCardDTO(cardModelToDelete);
 			cardAsyncService.sendDeleteCard(cardDTO);
 		}
-		cardRepository.delete(cardModelToDelete);
+	}
+
+	public void deleteCardAsync(CardJPA cardJPA) {
+		cardRepository.delete(cardJPA);
 	}
 	
 	public List<CardJPA> getRandCard(Integer userId, Integer nbr){

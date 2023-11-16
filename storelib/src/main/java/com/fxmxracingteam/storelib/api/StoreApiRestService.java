@@ -39,6 +39,14 @@ public class StoreApiRestService {
                 .block());
     }
 
+    public void updateTransactionOperation(Integer storeId, String operationType, Boolean isSuccessful) {
+        getWebClient().get()
+                .uri("/transaction/{storeId}/operation?operationType={operationType}&isSuccessful={isSuccessful}", storeId, operationType, isSuccessful)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
     public List<StoreTransactionDTO> getAllTransactions() {
         return getWebClient().get()
                 .uri("/transaction")

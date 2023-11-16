@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import com.fxmxracingteam.cardlib.api.CardApiRestService;
 import com.fxmxracingteam.cardlib.dto.CardDTO;
+import com.fxmxracingteam.storelib.api.StoreApiRestService;
+import com.fxmxracingteam.storelib.dto.OperationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,12 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 	private final UserAsyncService userAsyncService;
-	private CardApiRestService cardApiRestService;
+	private final CardApiRestService cardApiRestService;
+	private final StoreApiRestService storeApiRestService;
 
 	public UserService(UserRepository userRepository, UserMapper userMapper, UserAsyncService userAsyncService) {
 		this.cardApiRestService = new CardApiRestService();
+		this.storeApiRestService = new StoreApiRestService();
 		this.userRepository = userRepository;
 		this.userMapper = userMapper;
 		this.userAsyncService = userAsyncService;
@@ -65,17 +69,18 @@ public class UserService {
 		return userMapper.toUserDTO(uBd);
 	}
 
-	public UserDTO updateUser(UserDTO user, Boolean async) {
+	public UserDTO updateUser(UserDTO user, Boolean async, Integer transactionId) {
 		if (async) {
-			userAsyncService.updateUserDTO(user);
+			userAsyncService.updateUserDTO(user, transactionId);
 			return null;
 		}
 		UserJPA u = userMapper.toUserJPA(user);
-		return updateUser(u);
+		return updateUser(u, transactionId);
 	}
 
-	public UserDTO updateUser(UserJPA user) {
+	public UserDTO updateUser(UserJPA user, Integer transactionId) {
 		UserJPA uBd = userRepository.save(user);
+		storeApiRestService.updateTransactionOperation(transactionId, OperationType.USER.toString(), true);
 		return userMapper.toUserDTO(uBd);
 	}
 

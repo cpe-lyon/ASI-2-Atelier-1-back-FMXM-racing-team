@@ -64,14 +64,14 @@ public class CardRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/card/{id}")
-	public CardDTO updateCard(@RequestBody CardDTO card, @PathVariable String id) {
+	public CardDTO updateCard(@RequestBody CardDTO card, @PathVariable String id, @RequestParam(required=false) Integer transactionId) {
 		card.setId(Integer.valueOf(id));
-		return cardService.updateCard(cardMapper.toCardJPA(card), ASYNC);
+		return cardService.updateCard(cardMapper.toCardJPA(card), ASYNC, transactionId);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/card/{id}")
 	public void deleteUser(@PathVariable String id) {
-		cardService.deleteCard(Integer.valueOf(id), null, ASYNC);
+		cardService.deleteCardAsync(Integer.valueOf(id));
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value="/cards_to_sell")

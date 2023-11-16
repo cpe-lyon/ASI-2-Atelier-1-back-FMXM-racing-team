@@ -3,7 +3,8 @@ package com.fxmxracingteam.storeservice.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fxmxracingteam.storelib.dto.OperationType;
+import com.fxmxracingteam.storelib.dto.TransactionState;
 import org.springframework.stereotype.Service;
 
 import com.fxmxracingteam.cardlib.api.CardApiRestService;
@@ -18,21 +19,21 @@ import com.fxmxracingteam.userlib.dto.UserDTO;
 @Service
 public class StoreService {
 	
-	@Autowired
-	private StoreTransactionRepository storeTransactionRepository;
+	private final StoreTransactionRepository storeTransactionRepository;
 	
-	@Autowired
-	private StoreAsyncService storeAsyncService;
+	private final StoreAsyncService storeAsyncService;
 	
-	@Autowired
-	private StoreTransactionMapper storeTransactionMapper;
+	private final StoreTransactionMapper storeTransactionMapper;
 	
 	private UserApiRestService userApiRestService;
 	private CardApiRestService cardApiRestService;
 	
-	public StoreService() {
+	public StoreService(StoreTransactionRepository storeTransactionRepository, StoreAsyncService storeAsyncService, StoreTransactionMapper storeTransactionMapper) {
 		userApiRestService = new UserApiRestService();
 		cardApiRestService = new CardApiRestService();
+		this.storeTransactionRepository = storeTransactionRepository;
+		this.storeAsyncService = storeAsyncService;
+		this.storeTransactionMapper = storeTransactionMapper;
 	}
 
 	public boolean buyCard(Integer user_id, Integer card_id) {
@@ -82,5 +83,26 @@ public class StoreService {
 
 	}
 
+	private void checkIfTransactionPassed(StoreTransactionJPA storeTransactionJPA) {
+		if(storeTransactionJPA.isCardOperation() && storeTransactionJPA.isUserOperation()) {
+			storeTransactionJPA.setState(TransactionState.SUCCESS);
+			storeTransactionRepository.save(storeTransactionJPA);
+		}
+	}
 
+	public void updateTransactionOperation(Integer storeId, OperationType operationType, Boolean isSuccessful) {
+		StoreTransactionJPA storeTransactionJPA = storeTransactionRepository.findById(storeId).orElse(null);
+		if (storeTransactionJPA != null) {
+			switch (operationType) {
+				case USER:
+					storeTransactionJPA.setUserOperation(isSuccessful);
+					break;
+				case CARD:
+					storeTransactionJPA.setCardOperation(isSuccessful);
+					break;
+			}
+			storeTransactionRepository.save(storeTransactionJPA);
+			checkIfTransactionPassed(storeTransactionJPA);
+		}
+	}
 }

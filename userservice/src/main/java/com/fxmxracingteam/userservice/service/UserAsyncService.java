@@ -1,6 +1,7 @@
 package com.fxmxracingteam.userservice.service;
 
 import com.fxmxracingteam.userlib.dto.UserDTO;
+import com.fxmxracingteam.userlib.dto.UserTransactionDTO;
 import jakarta.jms.ObjectMessage;
 import jakarta.jms.TextMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -31,12 +32,11 @@ public class UserAsyncService {
         }
     }
 
-    public void updateUserDTO(UserDTO userDTO) {
+    public void updateUserDTO(UserDTO userDTO, Integer transactionId) {
         try {
             jmsTemplate.send(QUEUE_NAME, session -> {
                 ObjectMessage objectMessage = session.createObjectMessage();
-                objectMessage.setObject(userDTO);
-                objectMessage.setStringProperty("action", "UPDATE");
+                objectMessage.setObject(new UserTransactionDTO(transactionId, userDTO));
                 return objectMessage;
             });
         } catch (JmsException e) {
