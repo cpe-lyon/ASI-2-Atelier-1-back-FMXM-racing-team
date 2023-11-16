@@ -15,7 +15,7 @@ public class CardApiRestService {
 
     private WebClient webClient;
 
-    private String baseUrl = "http://carservice:8084";
+    private String baseUrl = "http://localhost:3005/user";
 
     public WebClient getWebClient() {
         if (webClient == null) {

@@ -19,7 +19,6 @@ import com.fxmxracingteam.userservice.service.UserService;
 public class UserRestController {
 	private final UserService userService;
 
-	@Value("${userservice.isAsync:true}")
 	private static Boolean isAsync = true;
 
 	public UserRestController(UserService userService) {

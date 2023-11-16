@@ -15,7 +15,7 @@ public class UserApiRestService {
 
     private WebClient webClient;
 
-    private String baseUrl = "http://userservice:8080";
+    private String baseUrl = "http://localhost:3005/user";
 
     public WebClient getWebClient() {
         if (webClient == null) {
