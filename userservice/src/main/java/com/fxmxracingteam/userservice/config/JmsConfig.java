@@ -1,4 +1,4 @@
-package com.fxmxracingteam.userservice.jms;
+package com.fxmxracingteam.userservice.config;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;

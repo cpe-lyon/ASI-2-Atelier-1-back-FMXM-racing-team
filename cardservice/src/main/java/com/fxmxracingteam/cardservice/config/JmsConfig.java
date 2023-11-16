@@ -1,4 +1,4 @@
-package com.fxmxracingteam.cardservice.jms;
+package com.fxmxracingteam.cardservice.config;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
