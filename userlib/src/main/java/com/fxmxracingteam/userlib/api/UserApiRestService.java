@@ -1,22 +1,21 @@
 package com.fxmxracingteam.userlib.api;
 
-import com.fxmxracingteam.userlib.dto.AuthDTO;
-import com.fxmxracingteam.userlib.dto.UserDTO;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
+
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
-import reactor.core.publisher.Mono;
 
-import java.util.List;
+import com.fxmxracingteam.userlib.dto.AuthDTO;
+import com.fxmxracingteam.userlib.dto.UserDTO;
+
+import reactor.core.publisher.Mono;
 
 public class UserApiRestService {
 
     private WebClient webClient;
 
-    @Value("${userRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl = "http://localhost:8080";
+    private String baseUrl = "http://userservice:8080";
 
     public WebClient getWebClient() {
         if (webClient == null) {

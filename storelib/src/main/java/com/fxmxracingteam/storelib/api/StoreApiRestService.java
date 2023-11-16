@@ -1,18 +1,16 @@
 package com.fxmxracingteam.storelib.api;
 
-import com.fxmxracingteam.storelib.dto.StoreOrderDTO;
-import com.fxmxracingteam.storelib.dto.StoreTransactionDTO;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.List;
+
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
+import com.fxmxracingteam.storelib.dto.StoreOrderDTO;
+import com.fxmxracingteam.storelib.dto.StoreTransactionDTO;
 
 public class StoreApiRestService {
     private WebClient webClient;
 
-    @Value("${storeRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl = "http://localhost:8081";
+    private String baseUrl = "http://storeservice:8081";
 
     public WebClient getWebClient() {
         if (webClient == null) {

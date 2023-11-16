@@ -2,7 +2,6 @@ package com.fxmxracingteam.cardlib.api;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,8 +15,7 @@ public class CardApiRestService {
 
     private WebClient webClient;
 
-    @Value("${cardRestAPI.baseUrl:http://localhost:8080}")
-    private String baseUrl = "http://localhost:8084";
+    private String baseUrl = "http://carservice:8084";
 
     public WebClient getWebClient() {
         if (webClient == null) {
