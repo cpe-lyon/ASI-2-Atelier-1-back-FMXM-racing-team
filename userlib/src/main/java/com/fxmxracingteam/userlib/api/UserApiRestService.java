@@ -15,7 +15,7 @@ public class UserApiRestService {
 
     private WebClient webClient;
 
-    private String baseUrl = "http://localhost:3005/user";
+    private String baseUrl = "http://proxy:3005/user";
 
     public WebClient getWebClient() {
         if (webClient == null) {

@@ -10,7 +10,7 @@ import com.fxmxracingteam.storelib.dto.StoreTransactionDTO;
 public class StoreApiRestService {
     private WebClient webClient;
 
-    private String baseUrl = "http://localhost:3005/store";
+    private String baseUrl = "http://proxy:3005/store";
 
     public WebClient getWebClient() {
         if (webClient == null) {

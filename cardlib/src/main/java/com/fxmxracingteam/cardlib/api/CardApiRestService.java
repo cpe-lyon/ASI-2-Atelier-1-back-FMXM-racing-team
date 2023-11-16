@@ -15,7 +15,7 @@ public class CardApiRestService {
 
     private WebClient webClient;
 
-    private String baseUrl = "http://localhost:3005/user";
+    private String baseUrl = "http://proxy:3005/card";
 
     public WebClient getWebClient() {
         if (webClient == null) {
